@@ -103,16 +103,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
+                    android:inputType="textPassword"
                     tools:password="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btSignIn"
+                android:id="@+id/btSignUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="20dp"
-                android:text="Sign in"
+                android:text="Sign Up"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btLogIn"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -124,11 +125,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Log In"
-                app:layout_constraintBottom_toBottomOf="@+id/btSignIn"
+                app:layout_constraintBottom_toBottomOf="@+id/btSignUp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/btSignIn"
-                app:layout_constraintTop_toTopOf="@+id/btSignIn" />
+                app:layout_constraintStart_toEndOf="@+id/btSignUp"
+                app:layout_constraintTop_toTopOf="@+id/btSignUp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

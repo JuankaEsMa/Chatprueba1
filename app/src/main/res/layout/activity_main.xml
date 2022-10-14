@@ -4,22 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@drawable/background"
+    android:backgroundTint="#AE000000"
+    android:backgroundTintMode="add"
     tools:context=".MainActivity">
 
     <EditText
         android:id="@+id/etMensaje"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:background="#FF8484"
+        android:background="#FFFFFF"
         android:ems="10"
         android:hint="Message..."
-        android:inputType="textPersonName"
+        android:inputType="text"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/IbEnviar"
         app:layout_constraintEnd_toStartOf="@+id/IbEnviar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/IbEnviar"
+        tools:background="#FBFBFB"
         tools:ignore="TouchTargetSizeCheck"
         tools:shadowRadius="5" />
 
@@ -28,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:background="#FF0000"
+        android:background="#00000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvMensajes"
@@ -45,6 +49,7 @@
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toTopOf="@+id/IbEnviar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

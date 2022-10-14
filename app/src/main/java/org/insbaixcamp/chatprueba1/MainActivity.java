@@ -29,9 +29,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -46,24 +52,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Usuario usuario;
     ImageView ivEnviar;
     RecyclerView mRecyclerView;
+    Scanner leerArchivo;
+    InputStream inputStream;
+    String[] insultosArray;
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        usuario = Autentificacion.getUsuario();
         setContentView(R.layout.activity_main);
+
+
+
+        usuario = Autentificacion.getUsuario();
         mRecyclerView = findViewById(R.id.rvMensajes);
         ivEnviar = findViewById(R.id.IbEnviar);
         ivEnviar.setOnClickListener(this);
         chatList = new ArrayList();
         btAutentificacion = findViewById(R.id.btAutentificacion);
         btAutentificacion.setOnClickListener(this);
-        recyclerAdapter = new RecyclerAdapter(chatList, MainActivity.this, usuario);
 
         recyclerAdapter = new RecyclerAdapter(chatList, MainActivity.this, usuario);
         mRecyclerView.setAdapter(recyclerAdapter);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        inputStream = getResources().openRawResource(R.raw.diccionario);
+        leerArchivo = new Scanner(inputStream);
+        while (leerArchivo.hasNext()){
+            leerArchivo.nextLine();
+            i++;
+        }
+
 
         ValueEventListener postListener = new ValueEventListener() {
             @Override
@@ -75,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
 
                 recyclerAdapter.notifyDataSetChanged();
-
                 setScrollbar(recyclerAdapter.getItemCount() - 1);
             }
 
@@ -85,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         };
         databaseRoot.addValueEventListener(postListener);
 
+        crearArray();
     }
     public void setScrollbar(int itemCount){
         mRecyclerView.scrollToPosition(itemCount);
@@ -94,21 +114,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+
         if(view.getId() == ivEnviar.getId()){
-            String text = "fallé";
             EditText etMensaje = findViewById(R.id.etMensaje);
-            if(etMensaje.getText() != null){
+
+            if(etMensaje.getText() != null && !etMensaje.getText().toString().equals("") && isAggresive(etMensaje.getText().toString())){
                 writeText(etMensaje.getText().toString());
                 etMensaje.setText("");
+            } else {
             }
-        } else {
-            Intent intent = new Intent(this, Autentificacion.class);
-            intent.putExtra(EXTRA_MESSAGE, "sing out");
-            startActivity(intent);
         }
 
     }
 
+    public void crearArray(){
+        inputStream = getResources().openRawResource(R.raw.diccionario);
+        leerArchivo = new Scanner(inputStream);
+
+        insultosArray = new String[i];
+        for(int j = 0; j < insultosArray.length; j++){
+            insultosArray[j] = leerArchivo.nextLine();
+        }
+    }
+    public boolean isAggresive(String text){
+
+        for(int i = 0; i < insultosArray.length; i++){
+            if(text.toLowerCase(Locale.ROOT).contains(insultosArray[i].toLowerCase(Locale.ROOT))){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void writeText(String text){
         String messageKey = databaseRoot.push().getKey();

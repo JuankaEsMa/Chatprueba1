@@ -51,9 +51,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 */
             if(userName.equals(chatListName)){
             holder.getMensajeEnviado().setText(chatList.get(position).getMessage());
+            holder.getTvUsuarioEnviado().setText(chatListName);
+
         } else {
             holder.getMensajeRecibido().setText(chatList.get(position).getMessage());
-        }
+            holder.getTvUsuarioRecibido().setText(chatListName);
+            }
 
     }
 
@@ -66,6 +69,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvMensajeRecibido;
         private TextView tvMensajeEnviado;
+        private TextView tvUsuarioEnviado;
+        private TextView tvUsuarioRecibido;
         CardView cvMensajeRecibido;
         CardView cvMensajeEnviado;
 
@@ -76,8 +81,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             tvMensajeEnviado = v.findViewById(R.id.tvMensajeEnviado);
             cvMensajeRecibido = v.findViewById(R.id.cvMensajeRecibido);
             cvMensajeEnviado = v.findViewById(R.id.cvMensajeEnviado);
+            tvUsuarioEnviado = v.findViewById(R.id.tvUsuarioEnviado);
+            tvUsuarioRecibido = v.findViewById(R.id.tvUsuarioRecibido);
 
-                    v.setOnClickListener(new View.OnClickListener() {
+
+            v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
@@ -96,6 +104,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             cvMensajeEnviado.setVisibility(View.VISIBLE);
             cvMensajeRecibido.setVisibility(View.GONE);
             return tvMensajeEnviado;
+        }
+
+        public TextView getTvUsuarioEnviado() {
+            return tvUsuarioEnviado;
+        }
+
+        public TextView getTvUsuarioRecibido() {
+            return tvUsuarioRecibido;
         }
     }
 
